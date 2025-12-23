@@ -1,4 +1,4 @@
-CMakeFiles/app.dir/main.cpp.obj: \
+CMakeFiles/main.dir/main.cpp.obj: \
  C:\Users\Jeremy\ Heslop\programming\cpp\fisch-bot\main.cpp \
  C:/msys64/mingw64/include/opencv4/opencv2/opencv.hpp \
  C:/msys64/mingw64/include/opencv4/opencv2/opencv_modules.hpp \
