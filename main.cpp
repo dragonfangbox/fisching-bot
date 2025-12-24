@@ -4,6 +4,8 @@
 #include <chrono>
 #include <thread>
 
+//#define DEBUG
+
 typedef struct {
 	cv::Point matchLocation;
 
@@ -171,21 +173,6 @@ void holdLeftClick(int ms) {
 	MouseLeftUp();
 }
 
-
-void click() {
-	mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-	Sleep(5);
-	mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-}
-
-
-void clickHold(int ms) {
-	mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-	Sleep(ms);
-	mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-}
-
-
 int main() {
 	std::cout << "Starting program..." << std::endl;
 
@@ -236,7 +223,6 @@ int main() {
 	State_t state;
 	initState(&state);
 	
-	cv::Point rLoc, lLoc;
 	int leftBound = 763 * 0.3125;
 	int rightBound = 1796 * 0.3125;
 	int barHeight = 541;
@@ -256,7 +242,7 @@ int main() {
 		
 		while(!matchTemplateGrayscale(&state, textTemplateGRAY)) {
 			std::cout << "Checking if fisching..." << std::endl;
-			holdLeftClick(100);
+			holdLeftClick(200);
 			updateState(&state);
 		}
 
@@ -265,19 +251,8 @@ int main() {
 
 			updateState(&state);
 
-		
-			
-			// if(leftBound == 0) {
-			// 	if(matchTemplateGrayscale(&state, leftBoundTemplateGRAY)) {
-			// 		leftBound = state.matchLocation.x;
-			// 	}
-			//}
-
 			std::cout << "--- FISCHING ---" << std::endl;
 
-			// cv::imshow("HELlo", state.mat);
-
-			// cv::waitKey(0);
 			int fishPos;
 			int whiteBarLBound, whiteBarRBound;
 			bool first = false;
@@ -286,7 +261,7 @@ int main() {
 				int red = color[2];
 				int green = color[1];
 				int blue = color[0];
-		//		std::cout << "COLOR: " << color << std::endl;
+
 				if(red > 150 && green > 150 && blue > 150) {
 					if(!first) {
 						whiteBarLBound = i;
@@ -296,15 +271,16 @@ int main() {
 					}
 				}
 
-		
 				// fish is inside the bar
 				if(red == 67 && green == 75 && blue == 91) {
 					fishPos = i;
 				}
 			}
 
+			#ifdef DEBUG
 			std::cout << "fishPOS: " << fishPos << std::endl;
 			std::cout << "POS: " << whiteBarLBound << " : " << whiteBarRBound << std::endl;
+			#endif
 
 			int barCenter = (whiteBarLBound + whiteBarRBound) / 2;
 
@@ -325,7 +301,9 @@ int main() {
 			const int MIN_HOLD = 12;    // (original value = 12)
 			const float GAIN   = 0.75f;  // sensitivity (tune this) (original value = 0.6f)
 
-		//	std::cout << "Error: " << error << std::endl;
+			#ifdef DEBUG
+			//	std::cout << "Error: " << error << std::endl;
+			#endif
 
 			// on the fish
 			// --- DEAD ZONE ---
