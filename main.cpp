@@ -137,7 +137,6 @@ bool matchTemplateGrayscale(State_t* state, cv::Mat templ) {
 	
 }
 
-
 cv::Vec3b getPixelColor(State_t* state, int x, int y) {
 	cv::Vec3b color = state->mat.at<cv::Vec3b>(cv::Point(x,y));
 	
@@ -176,49 +175,14 @@ void holdLeftClick(int ms) {
 int main() {
 	std::cout << "Starting program..." << std::endl;
 
-  	cv::Mat leftArrowTemplate = cv::imread("..\\fish-left.png");
-	if (leftArrowTemplate.empty()) {
-        std::cerr << "Failed to load left arrow template image!" << std::endl;
-        return -1;
-    }
-
-	cv::Mat rightArrowTemplate = cv::imread("..\\fish-right.png");
-   	if (rightArrowTemplate.empty()) {
-        std::cerr << "Failed to load right arrow template image!" << std::endl;
-        return -1;
-	}
-	
-	cv::Mat fishTemplate = cv::imread("..\\fish.png");
-	cv::Mat fishTemplateResized;
-	cv::resize(fishTemplate, fishTemplateResized, cv::Size(46 * 0.3125, 49 * 0.3125));
-   	if (rightArrowTemplate.empty()) {
-        std::cerr << "Failed to load fish template image!" << std::endl;
-        return -1;
-	}
-
-	cv::Mat leftBoundTemplate = cv::imread("..\\left-bound.png");
-   	if (rightArrowTemplate.empty()) {
-        std::cerr << "Failed to load leftBound template image!" << std::endl;
-        return -1;
-	}
-
-
 	cv::Mat textTemplate = cv::imread("..\\text.png");
-   	if (rightArrowTemplate.empty()) {
+   	if (textTemplate.empty()) {
         std::cerr << "Failed to load mouse template image!" << std::endl;
         return -1;
 	}
 
-	cv::Mat leftArrowTemplateGRAY, rightArrowTemplateGRAY, fishTemplateGRAY, leftBoundTemplateGRAY, textTemplateGRAY, fishTemplateResizedGRAY;
-	cv::cvtColor(leftArrowTemplate, leftArrowTemplateGRAY, cv::COLOR_BGR2GRAY);
-	cv::cvtColor(rightArrowTemplate, rightArrowTemplateGRAY, cv::COLOR_BGR2GRAY);
-	cv::cvtColor(fishTemplate, fishTemplateGRAY, cv::COLOR_BGR2GRAY);
-	cv::cvtColor(leftBoundTemplate, leftBoundTemplateGRAY, cv::COLOR_BGR2GRAY);
+	cv::Mat textTemplateGRAY;
 	cv::cvtColor(textTemplate, textTemplateGRAY, cv::COLOR_BGR2GRAY);
-
-	cv::cvtColor(fishTemplateResized, fishTemplateResizedGRAY, cv::COLOR_BGR2GRAY);
-
-	
 
 	State_t state;
 	initState(&state);
@@ -299,10 +263,10 @@ int main() {
 
 			const int MAX_HOLD = 100;   // ms (original value = 90)
 			const int MIN_HOLD = 12;    // (original value = 12)
-			const float GAIN   = 0.75f;  // sensitivity (tune this) (original value = 0.6f)
+			const float GAIN   = 0.7f;  // sensitivity (tune this) (original value = 0.6f)
 
 			#ifdef DEBUG
-			//	std::cout << "Error: " << error << std::endl;
+			std::cout << "Error: " << error << std::endl;
 			#endif
 
 			// on the fish
