@@ -1,12 +1,19 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(opencv_test LANGUAGES CXX)
+project(fisch_bot LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Force console subsystem
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mconsole")
+
+# Tell CMake where OpenCV is (adjust path to your MSYS2 installation)
+set(OpenCV_DIR "C:/msys64/mingw64/share/opencv4")
 find_package(OpenCV REQUIRED)
 
-add_executable(app main.cpp)
+# Add executable
+add_executable(main main.cpp)
 
-target_link_libraries(app PRIVATE ${OpenCV_LIBS})
+# Link OpenCV libraries
+target_link_libraries(main PRIVATE ${OpenCV_LIBS})
