@@ -202,11 +202,12 @@ int main() {
 			break;
 		}
 
-		holdLeftClick(200);
+		
 		
 		while(!matchTemplateGrayscale(&state, textTemplateGRAY)) {
 			std::cout << "Checking if fisching..." << std::endl;
 			holdLeftClick(200);
+			Sleep(200);
 			updateState(&state);
 		}
 
