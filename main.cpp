@@ -247,11 +247,12 @@ int main() {
 
 	bool running = true;
     while (running) {
-		if(GetAsyncKeyState('Q') & 0x8000){
+		if(GetAsyncKeyState('q') & 0x8000){
 			running = false;
+			break;
 		}
 
-		holdLeftClick(300);
+		holdLeftClick(200);
 		
 		while(!matchTemplateGrayscale(&state, textTemplateGRAY)) {
 			std::cout << "Checking if fisching..." << std::endl;
@@ -320,9 +321,9 @@ int main() {
 
 			int error = fishPos - barCenter;
 
-			const int MAX_HOLD = 130;   // ms
-			const int MIN_HOLD = 12;
-			const float GAIN   = 1.4f;  // sensitivity (tune this)
+			const int MAX_HOLD = 100;   // ms (original value = 90)
+			const int MIN_HOLD = 12;    // (original value = 12)
+			const float GAIN   = 0.75f;  // sensitivity (tune this) (original value = 0.6f)
 
 		//	std::cout << "Error: " << error << std::endl;
 
@@ -334,7 +335,7 @@ int main() {
 
 			// --- FISH RIGHT: HOLD ---
 			if (error > 0) {
-				int holdTime = std::clamp((int)(error * 0.6f), 12, 90);
+				int holdTime = std::clamp((int)(error * GAIN), MIN_HOLD, MAX_HOLD);
 				holdLeftClick(holdTime);
 			}
 
