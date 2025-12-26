@@ -6,6 +6,14 @@
 
 //#define DEBUG
 
+int leftBound = 763 * 0.3125;
+int rightBound = 1796 * 0.3125;
+int barHeight = 541;
+
+const int MAX_HOLD = 140;   // ms (original value = 90)
+const int MIN_HOLD = 12;    // (original value = 12)
+const float GAIN   = 0.75f;  // sensitivity (tune this) (original value = 0.6f)
+
 typedef struct {
 	cv::Point matchLocation;
 
@@ -124,9 +132,9 @@ bool matchTemplateGrayscale(State_t* state, cv::Mat templ) {
 	cv::Point minLoc, maxLoc;
 	cv::minMaxLoc(res, &minVal, &maxVal, &minLoc, &maxLoc);
 
-	//std::cout << "Best match score: " << maxVal << std::endl;
+	std::cout << "Best match score: " << maxVal << std::endl;
 
-	double threshold = 0.9;
+	double threshold = 0.65;
 	if (maxVal >= threshold) {
 		state->matchLocation = maxLoc;
 		//std::cout << "Template matched at: (" << maxLoc.x << ", " << maxLoc.y << ")" << std::endl;
@@ -187,9 +195,6 @@ int main() {
 	State_t state;
 	initState(&state);
 	
-	int leftBound = 763 * 0.3125;
-	int rightBound = 1796 * 0.3125;
-	int barHeight = 541;
 
 	int midPoint, fishLoc;
 
@@ -202,7 +207,7 @@ int main() {
 			break;
 		}
 
-		
+		Sleep(400);
 		
 		while(!matchTemplateGrayscale(&state, textTemplateGRAY)) {
 			std::cout << "Checking if fisching..." << std::endl;
@@ -261,10 +266,6 @@ int main() {
 			int deadZone = barWidth * 0.12 + abs(barVelocity) * 2;
 
 			int error = fishPos - barCenter;
-
-			const int MAX_HOLD = 100;   // ms (original value = 90)
-			const int MIN_HOLD = 12;    // (original value = 12)
-			const float GAIN   = 0.7f;  // sensitivity (tune this) (original value = 0.6f)
 
 			#ifdef DEBUG
 			std::cout << "Error: " << error << std::endl;
