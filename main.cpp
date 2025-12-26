@@ -132,7 +132,7 @@ bool matchTemplateGrayscale(State_t* state, cv::Mat templ) {
 	cv::Point minLoc, maxLoc;
 	cv::minMaxLoc(res, &minVal, &maxVal, &minLoc, &maxLoc);
 
-	std::cout << "Best match score: " << maxVal << std::endl;
+//	std::cout << "Best match score: " << maxVal << std::endl;
 
 	double threshold = 0.65;
 	if (maxVal >= threshold) {
