@@ -10,9 +10,9 @@ int leftBound = 763 * 0.3125;
 int rightBound = 1796 * 0.3125;
 int barHeight = 541;
 
-const int MAX_HOLD = 140;   // ms (original value = 90)
+const int MAX_HOLD = 145;   // ms (original value = 90)
 const int MIN_HOLD = 12;    // (original value = 12)
-const float GAIN   = 0.75f;  // sensitivity (tune this) (original value = 0.6f)
+const float GAIN   = 0.85f;  // sensitivity (tune this) (original value = 0.6f)
 
 typedef struct {
 	cv::Point matchLocation;
